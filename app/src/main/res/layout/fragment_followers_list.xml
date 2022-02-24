@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feature_user_detail.presentation.follower_list.FollowersListFragment">
+    tools:context=".feature_user_detail.presentation.followers_list.FollowersListFragment">
 
     <include
         layout="@layout/users_list"

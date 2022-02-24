@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.romnan.githubfinduser.core.util.Resource
 import com.romnan.githubfinduser.feature_user_detail.domain.use_case.UserDetailUseCases
-import com.romnan.githubfinduser.feature_user_detail.presentation.follower_list.FollowersListState
+import com.romnan.githubfinduser.feature_user_detail.presentation.followers_list.FollowersListState
 import com.romnan.githubfinduser.feature_user_detail.presentation.following_list.FollowingListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn

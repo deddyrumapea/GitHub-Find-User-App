@@ -1,4 +1,4 @@
-package com.romnan.githubfinduser.feature_user_detail.presentation.follower_list
+package com.romnan.githubfinduser.feature_user_detail.presentation.followers_list
 
 import com.romnan.githubfinduser.feature_user_detail.domain.model.FollowerUser
 

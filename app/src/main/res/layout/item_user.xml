@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margin_8dp"
+    android:layout_marginVertical="@dimen/margin_4dp"
     android:background="@drawable/bg_rounded_corner"
     android:padding="@dimen/padding_16dp">
 
@@ -19,7 +19,7 @@
         tools:src="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tv_name"
+        android:id="@+id/tv_username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_16dp"
@@ -31,17 +31,7 @@
         tools:text="@tools:sample/lorem" />
 
     <TextView
-        android:id="@+id/tv_username"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_16dp"
-        app:layout_constraintBottom_toTopOf="@id/tv_location"
-        app:layout_constraintLeft_toRightOf="@id/iv_profile_picture"
-        app:layout_constraintTop_toBottomOf="@id/tv_name"
-        tools:text="@tools:sample/lorem" />
-
-    <TextView
-        android:id="@+id/tv_location"
+        android:id="@+id/tv_type"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_16dp"
@@ -49,6 +39,5 @@
         app:layout_constraintLeft_toRightOf="@id/iv_profile_picture"
         app:layout_constraintTop_toBottomOf="@id/tv_username"
         tools:text="@tools:sample/lorem" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

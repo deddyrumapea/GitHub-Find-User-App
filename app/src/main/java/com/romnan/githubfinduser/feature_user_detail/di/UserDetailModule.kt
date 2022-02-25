@@ -1,12 +1,10 @@
 package com.romnan.githubfinduser.feature_user_detail.di
 
+import com.romnan.githubfinduser.core.data.local.CoreDatabase
 import com.romnan.githubfinduser.feature_user_detail.data.remote.UserDetailApi
 import com.romnan.githubfinduser.feature_user_detail.data.repository.UserDetailRepositoryImpl
 import com.romnan.githubfinduser.feature_user_detail.domain.repository.UserDetailRepository
-import com.romnan.githubfinduser.feature_user_detail.domain.use_case.GetUserDetail
-import com.romnan.githubfinduser.feature_user_detail.domain.use_case.GetUserFollowersList
-import com.romnan.githubfinduser.feature_user_detail.domain.use_case.GetUserFollowingList
-import com.romnan.githubfinduser.feature_user_detail.domain.use_case.UserDetailUseCases
+import com.romnan.githubfinduser.feature_user_detail.domain.use_case.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,18 +17,21 @@ import javax.inject.Singleton
 object UserDetailModule {
     @Provides
     @Singleton
-    fun provideUserDetailUseCases(repository: UserDetailRepository): UserDetailUseCases {
-        return UserDetailUseCases(
+    fun provideUserDetailUseCases(repository: UserDetailRepository): UserDetailUseCase {
+        return UserDetailUseCase(
             getUserDetail = GetUserDetail(repository),
             getUserFollowersList = GetUserFollowersList(repository),
-            getUserFollowingList = GetUserFollowingList(repository)
+            getUserFollowingList = GetUserFollowingList(repository),
+            isFavUser = IsFavUser(repository),
+            insertFavUser = InsertFavUser(repository),
+            deleteFavUser = DeleteFavUser(repository)
         )
     }
 
     @Provides
     @Singleton
-    fun provideUserDetailRepository(api: UserDetailApi): UserDetailRepository {
-        return UserDetailRepositoryImpl(api)
+    fun provideUserDetailRepository(api: UserDetailApi, db: CoreDatabase): UserDetailRepository {
+        return UserDetailRepositoryImpl(userDetailApi = api, coreDao = db.dao)
     }
 
     @Provides

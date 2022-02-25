@@ -1,6 +1,8 @@
 package com.romnan.githubfinduser.core.di
 
-import com.romnan.githubfinduser.BuildConfig
+import android.app.Application
+import androidx.room.Room
+import com.romnan.githubfinduser.core.data.local.CoreDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,11 +18,12 @@ import javax.inject.Singleton
 object CoreModule {
     @Provides
     @Singleton
-    fun provideGitHubRetrofit(): Retrofit {
+    fun provideCoreRetrofit(): Retrofit {
+        // TODO: use BuildConfig to get base url and API key
         val headerInterceptor = Interceptor { chain ->
             val request = chain.request()
                 .newBuilder()
-                .addHeader("Authorization", BuildConfig.GITHUB_API_KEY)
+                .addHeader("Authorization", "token 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")
                 .build()
             chain.proceed(request)
         }
@@ -30,9 +33,19 @@ object CoreModule {
             .build()
 
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.GITHUB_BASE_URL)
+            .baseUrl("https://api.github.com/")
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCoreDatabase(app: Application): CoreDatabase {
+        return Room.databaseBuilder(
+            app,
+            CoreDatabase::class.java,
+            CoreDatabase.NAME
+        ).build()
     }
 }

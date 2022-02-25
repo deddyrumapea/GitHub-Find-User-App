@@ -11,6 +11,7 @@ data class UserDetailDto(
     val login: String?,
     val name: String?,
     val public_repos: Int?,
+    val type: String?
 ) {
     fun toUserDetail() = UserDetail(
         avatarUrl = avatar_url ?: "",
@@ -20,6 +21,7 @@ data class UserDetailDto(
         company = company ?: "",
         repositoriesCount = public_repos ?: 0,
         followersCount = followers ?: 0,
-        followingCount = following ?: 0
+        followingCount = following ?: 0,
+        type = type ?: ""
     )
 }

@@ -1,6 +1,9 @@
 package com.romnan.githubfinduser.feature_user_detail.data.repository
 
-import com.romnan.githubfinduser.core.util.Resource
+import com.romnan.githubfinduser.core.data.local.CoreDao
+import com.romnan.githubfinduser.core.data.local.entity.FavUserEntity
+import com.romnan.githubfinduser.core.domain.model.User
+import com.romnan.githubfinduser.core.domain.util.Resource
 import com.romnan.githubfinduser.feature_user_detail.data.remote.UserDetailApi
 import com.romnan.githubfinduser.feature_user_detail.domain.model.FollowerUser
 import com.romnan.githubfinduser.feature_user_detail.domain.model.FollowingUser
@@ -11,12 +14,13 @@ import kotlinx.coroutines.flow.flow
 import java.io.IOException
 
 class UserDetailRepositoryImpl(
-    private val api: UserDetailApi
+    private val userDetailApi: UserDetailApi,
+    private val coreDao: CoreDao
 ) : UserDetailRepository {
     override fun getUserDetail(username: String): Flow<Resource<UserDetail>> = flow {
         emit(Resource.Loading())
         try {
-            val userDetail = api.getUserDetail(username).toUserDetail()
+            val userDetail = userDetailApi.getUserDetail(username).toUserDetail()
             emit(Resource.Success(userDetail))
         } catch (e: IOException) {
             emit(Resource.Error(message = IO_EXCEPTION_MESSAGE))
@@ -28,7 +32,8 @@ class UserDetailRepositoryImpl(
     override fun getUserFollowersList(username: String): Flow<Resource<List<FollowerUser>>> = flow {
         emit(Resource.Loading(emptyList()))
         try {
-            val userFollowersList = api.getUserFollowersList(username).map { it.toFollowerUser() }
+            val userFollowersList =
+                userDetailApi.getUserFollowersList(username).map { it.toFollowerUser() }
             emit(Resource.Success(userFollowersList))
         } catch (e: IOException) {
             emit(Resource.Error(message = IO_EXCEPTION_MESSAGE))
@@ -41,7 +46,7 @@ class UserDetailRepositoryImpl(
         flow {
             emit(Resource.Loading(emptyList()))
             try {
-                val userFollowingList = api.getUserFollowingList(username)
+                val userFollowingList = userDetailApi.getUserFollowingList(username)
                     .map { it.toFollowingUser() }
                 emit(Resource.Success(userFollowingList))
             } catch (e: IOException) {
@@ -50,6 +55,19 @@ class UserDetailRepositoryImpl(
                 emit(Resource.Error(message = EXCEPTION_MESSAGE))
             }
         }
+
+    override suspend fun isFavUser(username: String): Boolean {
+        val user = coreDao.findFavUser(username)
+        return user != null
+    }
+
+    override suspend fun insertFavUser(user: User) {
+        coreDao.insertFavUser(FavUserEntity.fromUser(user))
+    }
+
+    override suspend fun deleteFavUser(user: User) {
+        coreDao.deleteFavUser(FavUserEntity.fromUser(user))
+    }
 
     companion object {
         private const val IO_EXCEPTION_MESSAGE = "Please check your internet connection"

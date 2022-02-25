@@ -5,10 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
@@ -34,8 +31,12 @@ class UserDetailActivity : AppCompatActivity() {
 
         val vpFoll = findViewById<ViewPager2>(R.id.vp_followers_following)
         val tlFoll = findViewById<TabLayout>(R.id.tl_followers_following)
+        val tbFav = findViewById<ToggleButton>(R.id.tb_fav)
+
         val follAdapter = FollowersFollowingAdapter(this)
         vpFoll.adapter = follAdapter
+
+        tbFav.setOnClickListener { viewModel.onEvent(UserDetailEvent.ToggleFav) }
 
         TabLayoutMediator(tlFoll, vpFoll) { tab, position ->
             tab.text = when (position) {
@@ -57,6 +58,8 @@ class UserDetailActivity : AppCompatActivity() {
                 Toast.LENGTH_LONG
             ).show()
         }
+
+        viewModel.isFav.observe(this) { tbFav.isChecked = it }
     }
 
     private fun showProgressBar(visible: Boolean) {
@@ -83,14 +86,13 @@ class UserDetailActivity : AppCompatActivity() {
 
         if (user.name.isNotBlank()) tvName.text = user.name else tvName.visibility = View.INVISIBLE
 
-        if (user.username.isNotBlank()) tvUsername.text = user.username
-        else tvUsername.visibility = View.INVISIBLE
+        tvUsername.text = user.username
 
         if (user.location.isNotBlank()) tvLocation.text = user.location
-        else tvLocation.visibility = View.INVISIBLE
+        else tvLocation.visibility = View.GONE
 
         if (user.company.isNotBlank()) tvCompany.text = user.company
-        else tvCompany.visibility = View.INVISIBLE
+        else tvCompany.visibility = View.GONE
 
         tvRepositories.text = user.repositoriesCount.toString()
         tvFollowers.text = user.followersCount.toString()
@@ -98,7 +100,7 @@ class UserDetailActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.detail, menu)
+        menuInflater.inflate(R.menu.user_detail, menu)
         return true
     }
 
@@ -114,7 +116,7 @@ class UserDetailActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_share -> userDetail?.let { startShareIntent(it) }
+            R.id.mi_share -> userDetail?.let { startShareIntent(it) }
             android.R.id.home -> finish()
         }
         return true

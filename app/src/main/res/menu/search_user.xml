@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/mi_fav_users"
+        android:icon="@drawable/ic_baseline_favorite_24"
+        android:title="@string/open_favorite_users_list"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/mi_settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/settings"
+        app:showAsAction="ifRoom" />
+</menu>

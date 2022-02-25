@@ -2,6 +2,8 @@ package com.romnan.githubfinduser.feature_search_user.presentation
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -13,6 +15,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.romnan.githubfinduser.R
+import com.romnan.githubfinduser.feature_fav_users_list.presentation.FavUsersListActivity
 import com.romnan.githubfinduser.feature_search_user.presentation.adapter.UserAdapter
 import com.romnan.githubfinduser.feature_user_detail.presentation.UserDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,12 +31,11 @@ class SearchUsersActivity : AppCompatActivity() {
         installSplashScreen()
         setContentView(R.layout.activity_search_users)
 
+        rvUsersList = findViewById(R.id.rv_users_list)
         val tvNoUsers = findViewById<TextView>(R.id.tv_no_users)
+        val svUser = findViewById<SearchView>(R.id.sv_user)
 
         val userAdapter = UserAdapter()
-
-        rvUsersList = findViewById(R.id.rv_users_list)
-        val svUser = findViewById<SearchView>(R.id.sv_user)
 
         userAdapter.onItemClick = { selectedUser ->
             val intent = Intent(this, UserDetailActivity::class.java)
@@ -80,5 +82,19 @@ class SearchUsersActivity : AppCompatActivity() {
             rvUsersList?.visibility = View.VISIBLE
             pbUsersList.visibility = View.INVISIBLE
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.search_user, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.mi_fav_users) {
+            startActivity(
+                Intent(this@SearchUsersActivity, FavUsersListActivity::class.java)
+            )
+        }
+        return true
     }
 }

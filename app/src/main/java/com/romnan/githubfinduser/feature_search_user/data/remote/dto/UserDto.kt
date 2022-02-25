@@ -1,6 +1,6 @@
 package com.romnan.githubfinduser.feature_search_user.data.remote.dto
 
-import com.romnan.githubfinduser.feature_search_user.domain.model.User
+import com.romnan.githubfinduser.core.domain.model.User
 
 data class UserDto(
     val avatar_url: String?,

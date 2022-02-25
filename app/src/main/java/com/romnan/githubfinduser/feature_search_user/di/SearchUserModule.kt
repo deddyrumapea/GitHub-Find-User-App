@@ -16,6 +16,7 @@ import javax.inject.Singleton
 object SearchUserModule {
     @Provides
     @Singleton
+    // TODO: make a wrapper class for use cases
     fun provideSearchUsersUseCases(repository: SearchUsersRepository): SearchUsers {
         return SearchUsers(repository)
     }

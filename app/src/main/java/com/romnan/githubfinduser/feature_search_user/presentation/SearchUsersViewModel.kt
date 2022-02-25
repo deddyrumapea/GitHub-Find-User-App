@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.romnan.githubfinduser.core.util.Resource
+import com.romnan.githubfinduser.core.domain.util.Resource
 import com.romnan.githubfinduser.feature_search_user.domain.use_case.SearchUsers
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -30,6 +30,7 @@ class SearchUsersViewModel @Inject constructor(
     }
 
     private fun fetchUsers() {
+        // TODO: add fetch user job
         viewModelScope.launch {
             searchQuery.value?.let {
                 searchUsers(query = it).onEach { result ->

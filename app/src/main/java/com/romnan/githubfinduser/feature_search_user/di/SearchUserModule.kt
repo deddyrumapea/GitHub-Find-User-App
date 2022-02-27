@@ -4,6 +4,7 @@ import com.romnan.githubfinduser.feature_search_user.data.remote.SearchUsersApi
 import com.romnan.githubfinduser.feature_search_user.data.repository.SearchUsersRepositoryImpl
 import com.romnan.githubfinduser.feature_search_user.domain.repository.SearchUsersRepository
 import com.romnan.githubfinduser.feature_search_user.domain.use_case.SearchUsers
+import com.romnan.githubfinduser.feature_search_user.domain.use_case.SearchUsersUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,9 +17,8 @@ import javax.inject.Singleton
 object SearchUserModule {
     @Provides
     @Singleton
-    // TODO: make a wrapper class for use cases
-    fun provideSearchUsersUseCases(repository: SearchUsersRepository): SearchUsers {
-        return SearchUsers(repository)
+    fun provideSearchUsersUseCases(repository: SearchUsersRepository): SearchUsersUseCases {
+        return SearchUsersUseCases(SearchUsers(repository))
     }
 
     @Provides

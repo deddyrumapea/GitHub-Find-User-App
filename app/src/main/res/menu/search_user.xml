@@ -8,8 +8,9 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/mi_settings"
-        android:icon="@drawable/ic_baseline_settings_24"
-        android:title="@string/settings"
-        app:showAsAction="ifRoom" />
+        android:id="@+id/mi_dark_mode"
+        android:checkable="true"
+        android:icon="@drawable/ic_baseline_dark_mode_24"
+        android:title="@string/dark_mode"
+        app:showAsAction="never" />
 </menu>

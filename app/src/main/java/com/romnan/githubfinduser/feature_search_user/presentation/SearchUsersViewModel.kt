@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.romnan.githubfinduser.core.domain.util.Resource
-import com.romnan.githubfinduser.feature_search_user.domain.use_case.SearchUsers
+import com.romnan.githubfinduser.feature_search_user.domain.use_case.SearchUsersUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchUsersViewModel @Inject constructor(
-    private val searchUsers: SearchUsers
+    private val useCases: SearchUsersUseCases
 ) : ViewModel() {
     private val _searchQuery = MutableLiveData("")
     val searchQuery: LiveData<String> = _searchQuery
@@ -33,7 +33,7 @@ class SearchUsersViewModel @Inject constructor(
         // TODO: add fetch user job
         viewModelScope.launch {
             searchQuery.value?.let {
-                searchUsers(query = it).onEach { result ->
+                useCases.searchUsers(query = it).onEach { result ->
                     when (result) {
                         is Resource.Success -> {
                             _searchUsersState.value = searchUsersState.value?.copy(

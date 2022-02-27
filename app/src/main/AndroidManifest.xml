@@ -15,7 +15,7 @@
         <activity
             android:name=".feature_search_user.presentation.SearchUsersActivity"
             android:exported="true"
-            android:theme="@style/Theme.App.Starting">
+            android:theme="@style/Theme.AppCompat.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,5 +35,4 @@
             android:parentActivityName=".feature_search_user.presentation.SearchUsersActivity"
             android:theme="@style/Theme.GitHubFindUser" />
     </application>
-
 </manifest>

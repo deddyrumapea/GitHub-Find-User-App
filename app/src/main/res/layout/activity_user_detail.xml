@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:indeterminate="true"
             android:paddingTop="@dimen/padding_4dp"
-            android:progressTint="@color/green_200"
+            android:progressTint="?attr/colorSecondary"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -32,7 +32,7 @@
             android:layout_marginTop="@dimen/margin_16dp"
             android:contentDescription="@string/statistics_background"
             android:src="@drawable/bg_rounded_corner"
-            app:layout_constraintBottom_toBottomOf="@id/s_profile_bottom"
+            app:layout_constraintBottom_toBottomOf="@id/v_profile_bottom"
             app:layout_constraintTop_toBottomOf="@id/pb_user_detail" />
 
         <ImageView
@@ -76,12 +76,11 @@
             android:layout_height="@dimen/height_36dp"
             android:layout_marginHorizontal="@dimen/margin_16dp"
             android:layout_marginVertical="@dimen/margin_8dp"
-            android:background="@drawable/bg_selector_toggle_button"
+            android:background="@drawable/selector_bg_toggle_btn"
             android:elevation="4dp"
-            android:textColor="@drawable/selector_toggle_btn_text_color"
+            android:textColor="@drawable/selector_text_color_toggle_btn"
             android:textOff="@string/favorite"
             android:textOn="@string/favorited"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/iv_profile_picture"
             app:layout_constraintLeft_toLeftOf="@id/tv_username"
             app:layout_constraintRight_toRightOf="@id/iv_bg_user_profile"
@@ -113,8 +112,8 @@
             app:layout_constraintTop_toBottomOf="@id/tv_location"
             tools:text="@tools:sample/lorem" />
 
-        <Space
-            android:id="@+id/s_profile_bottom"
+        <View
+            android:id="@+id/v_profile_bottom"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_16dp"
             app:layout_constraintTop_toBottomOf="@id/tv_company" />
@@ -211,8 +210,7 @@
             android:layout_marginTop="@dimen/margin_16dp"
             android:background="@drawable/bg_rounded_corner"
             app:layout_constraintBottom_toTopOf="@id/vp_followers_following"
-            app:layout_constraintTop_toBottomOf="@id/tv_repositories_title"
-            app:tabTextColor="@color/blue_grey_1000" />
+            app:layout_constraintTop_toBottomOf="@id/tv_repositories_title" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vp_followers_following"

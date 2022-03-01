@@ -1,9 +1,4 @@
 buildscript {
-    ext {
-        // TODO: move dependencies ext here
-        dataStoreVersion = '1.0.0'
-    }
-
     dependencies {
         classpath "com.google.dagger:hilt-android-gradle-plugin:2.38.1"
 

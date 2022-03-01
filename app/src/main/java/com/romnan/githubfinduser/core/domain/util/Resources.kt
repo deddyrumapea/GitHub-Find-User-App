@@ -1,4 +1,4 @@
-package com.romnan.githubfinduser.core.util
+package com.romnan.githubfinduser.core.domain.util
 
 sealed class Resource<T>(val data: T? = null, val message: String? = null) {
     class Loading<T>(data: T? = null) : Resource<T>(data)

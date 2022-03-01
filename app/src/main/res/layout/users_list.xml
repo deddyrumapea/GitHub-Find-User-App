@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/account_list"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?android:windowBackground"
+    tools:ignore="Overdraw">
 
     <ProgressBar
         android:id="@+id/pb_users_list"
@@ -22,7 +24,6 @@
         android:id="@+id/rv_users_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey_50"
         android:clipToPadding="false"
         android:padding="@dimen/padding_16dp"
         tools:listitem="@layout/item_user"

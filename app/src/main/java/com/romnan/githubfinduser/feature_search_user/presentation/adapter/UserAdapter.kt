@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.romnan.githubfinduser.R
-import com.romnan.githubfinduser.feature_search_user.domain.model.User
+import com.romnan.githubfinduser.core.domain.model.User
 
 class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     private val usersList = ArrayList<User>()

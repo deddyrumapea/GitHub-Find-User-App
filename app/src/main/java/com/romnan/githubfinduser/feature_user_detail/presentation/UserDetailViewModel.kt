@@ -4,11 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.romnan.githubfinduser.core.util.Resource
-import com.romnan.githubfinduser.feature_user_detail.domain.use_case.UserDetailUseCases
+import com.romnan.githubfinduser.core.domain.util.Resource
+import com.romnan.githubfinduser.feature_user_detail.domain.use_case.UserDetailUseCase
 import com.romnan.githubfinduser.feature_user_detail.presentation.followers_list.FollowersListState
 import com.romnan.githubfinduser.feature_user_detail.presentation.following_list.FollowingListState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -16,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserDetailViewModel @Inject constructor(
-    private val userDetailUseCases: UserDetailUseCases
+    private val useCase: UserDetailUseCase
 ) : ViewModel() {
     private val _userDetailState = MutableLiveData(UserDetailState())
     val userDetailState: LiveData<UserDetailState> = _userDetailState
@@ -27,22 +28,56 @@ class UserDetailViewModel @Inject constructor(
     private val _followingListState = MutableLiveData(FollowingListState())
     val followingListState: LiveData<FollowingListState> = _followingListState
 
+    private val _isFav = MutableLiveData(false)
+    val isFav: LiveData<Boolean> = _isFav
+
     private var _username: String? = null
 
+    private var fetchFavStateJob: Job? = null
+    private var toggleFavUserJob: Job? = null
+    private var fetchUserDetailJob: Job? = null
+    private var fetchUserFollowersListJob: Job? = null
+    private var fetchUserFollowingListJob: Job? = null
+
     fun onEvent(event: UserDetailEvent) {
-        if (event is UserDetailEvent.UsernameReceived) {
-            _username = event.username
-            _username?.let {
-                fetchUserDetail(it)
-                fetchUserFollowersList(it)
-                fetchUserFollowingList(it)
+        when (event) {
+            is UserDetailEvent.UsernameReceived -> {
+                _username = event.username
+                fetchUserDetail()
+                fetchUserFollowersList()
+                fetchUserFollowingList()
+                fetchFavState()
             }
+
+            is UserDetailEvent.ToggleFav -> toggleFavUser()
         }
     }
 
-    private fun fetchUserDetail(username: String) {
-        viewModelScope.launch {
-            userDetailUseCases.getUserDetail(username).onEach { result ->
+    private fun fetchFavState() {
+        val username = _username ?: return
+
+        fetchFavStateJob?.cancel()
+        fetchFavStateJob = viewModelScope.launch { _isFav.value = useCase.isFavUser(username) }
+    }
+
+    private fun toggleFavUser() {
+        val user = userDetailState.value?.userDetail?.toUser() ?: return
+        val isFav = _isFav.value ?: return
+
+        toggleFavUserJob?.cancel()
+        toggleFavUserJob = viewModelScope.launch {
+            if (isFav) useCase.deleteFavUser(user)
+            else useCase.insertFavUser(user)
+            fetchFavState()
+        }
+    }
+
+    private fun fetchUserDetail() {
+        val username = _username ?: return
+
+        fetchUserDetailJob?.cancel()
+        fetchUserDetailJob = viewModelScope.launch {
+            useCase.getUserDetail(username).onEach { result ->
                 when (result) {
                     is Resource.Success -> {
                         _userDetailState.value = userDetailState.value?.copy(
@@ -68,9 +103,12 @@ class UserDetailViewModel @Inject constructor(
         }
     }
 
-    private fun fetchUserFollowersList(username: String) {
-        viewModelScope.launch {
-            userDetailUseCases.getUserFollowersList(username).onEach { result ->
+    private fun fetchUserFollowersList() {
+        val username = _username ?: return
+
+        fetchUserFollowersListJob?.cancel()
+        fetchUserFollowersListJob = viewModelScope.launch {
+            useCase.getUserFollowersList(username).onEach { result ->
                 when (result) {
                     is Resource.Success -> {
                         _followersListState.value = followersListState.value?.copy(
@@ -96,9 +134,12 @@ class UserDetailViewModel @Inject constructor(
         }
     }
 
-    private fun fetchUserFollowingList(username: String) {
-        viewModelScope.launch {
-            userDetailUseCases.getUserFollowingList(username).onEach { result ->
+    private fun fetchUserFollowingList() {
+        val username = _username ?: return
+
+        fetchUserFollowingListJob?.cancel()
+        fetchUserFollowingListJob = viewModelScope.launch {
+            useCase.getUserFollowingList(username).onEach { result ->
                 when (result) {
                     is Resource.Success -> {
                         _followingListState.value = followingListState.value?.copy(

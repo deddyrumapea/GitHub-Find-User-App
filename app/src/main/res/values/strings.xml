@@ -7,9 +7,13 @@
     <string name="share_chooser_message">Share this GitHub user using…</string>
     <string name="share_content">Hey, check this GitHub user!\n%1$s\nhttps://github.com/%2$s</string>
     <string name="search_user">Search user</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="followers">Followers</string>
     <string name="following">Following</string>
     <string name="background_image">Background image</string>
     <string name="no_users">There\'s no user to display</string>
+    <string name="open_favorite_users_list">Open favorite users list</string>
+    <string name="favorite_users">Favorite Users</string>
+    <string name="favorited">Favorited</string>
+    <string name="favorite">Favorite</string>
+    <string name="dark_mode">Dark mode</string>
 </resources>

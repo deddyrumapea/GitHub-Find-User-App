@@ -4,14 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="@dimen/margin_4dp"
-    android:background="@drawable/bg_rounded_corner"
-    android:padding="@dimen/padding_16dp">
+    android:layout_marginVertical="@dimen/margin_4dp">
+
+    <ImageView
+        android:id="@+id/iv_item_bg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:contentDescription="@string/background_image"
+        android:src="@drawable/bg_rounded_corner"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/iv_profile_picture"
         android:layout_width="@dimen/width_50dp"
         android:layout_height="@dimen/height_50dp"
+        android:layout_margin="@dimen/margin_16dp"
         android:contentDescription="@string/user_profile_picture"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -23,10 +31,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_16dp"
-        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:textColor="?android:keyTextColor"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/tv_username"
         app:layout_constraintLeft_toRightOf="@id/iv_profile_picture"
+        app:layout_constraintRight_toRightOf="@id/iv_item_bg"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/lorem" />
 
@@ -35,8 +45,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/iv_profile_picture"
         app:layout_constraintLeft_toRightOf="@id/iv_profile_picture"
+        app:layout_constraintRight_toRightOf="@id/iv_item_bg"
         app:layout_constraintTop_toBottomOf="@id/tv_username"
         tools:text="@tools:sample/lorem" />
 

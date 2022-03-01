@@ -1,4 +1,4 @@
-package com.romnan.githubfinduser.feature_search_user.domain.model
+package com.romnan.githubfinduser.core.domain.model
 
 data class User(
     var avatarUrl: String,

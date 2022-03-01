@@ -1,6 +1,6 @@
 package com.romnan.githubfinduser.feature_user_detail.domain.use_case
 
-import com.romnan.githubfinduser.core.util.Resource
+import com.romnan.githubfinduser.core.domain.util.Resource
 import com.romnan.githubfinduser.feature_user_detail.domain.model.FollowerUser
 import com.romnan.githubfinduser.feature_user_detail.domain.repository.UserDetailRepository
 import kotlinx.coroutines.flow.Flow

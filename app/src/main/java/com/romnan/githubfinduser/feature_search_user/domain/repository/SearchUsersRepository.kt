@@ -1,7 +1,7 @@
 package com.romnan.githubfinduser.feature_search_user.domain.repository
 
-import com.romnan.githubfinduser.core.util.Resource
-import com.romnan.githubfinduser.feature_search_user.domain.model.User
+import com.romnan.githubfinduser.core.domain.util.Resource
+import com.romnan.githubfinduser.core.domain.model.User
 import kotlinx.coroutines.flow.Flow
 
 interface SearchUsersRepository {

@@ -3,11 +3,12 @@ package com.romnan.githubfinduser.core.di
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
+import com.romnan.githubfinduser.BuildConfig
 import com.romnan.githubfinduser.core.data.local.CoreDatabase
 import com.romnan.githubfinduser.core.data.preferences.PreferencesRepositoryImpl
 import com.romnan.githubfinduser.core.domain.repository.PreferencesRepository
 import com.romnan.githubfinduser.core.domain.use_case.IsDarkModeEnabled
-import com.romnan.githubfinduser.core.domain.use_case.PreferencesUseCases
+import com.romnan.githubfinduser.core.domain.use_case.PreferencesUseCase
 import com.romnan.githubfinduser.core.domain.use_case.SaveThemeMode
 import dagger.Module
 import dagger.Provides
@@ -26,11 +27,10 @@ object CoreModule {
     @Provides
     @Singleton
     fun provideCoreRetrofit(): Retrofit {
-        // TODO: use BuildConfig to get base url and API key
         val headerInterceptor = Interceptor { chain ->
             val request = chain.request()
                 .newBuilder()
-                .addHeader("Authorization", "token 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")
+                .addHeader("Authorization", BuildConfig.GITHUB_API_KEY)
                 .build()
             chain.proceed(request)
         }
@@ -40,7 +40,7 @@ object CoreModule {
             .build()
 
         return Retrofit.Builder()
-            .baseUrl("https://api.github.com/")
+            .baseUrl(BuildConfig.GITHUB_BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -58,8 +58,8 @@ object CoreModule {
 
     @Provides
     @Singleton
-    fun providePreferencesUseCases(repository: PreferencesRepository): PreferencesUseCases {
-        return PreferencesUseCases(
+    fun providePreferencesUseCases(repository: PreferencesRepository): PreferencesUseCase {
+        return PreferencesUseCase(
             saveThemeMode = SaveThemeMode(repository),
             isDarkModeEnabled = IsDarkModeEnabled(repository)
         )

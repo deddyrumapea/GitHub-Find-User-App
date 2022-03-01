@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.romnan.githubfinduser.R
 import com.romnan.githubfinduser.core.presentation.PreferencesEvent
 import com.romnan.githubfinduser.core.presentation.PreferencesViewModel
+import com.romnan.githubfinduser.core.util.EspressoIdlingResource
 import com.romnan.githubfinduser.feature_fav_users_list.presentation.FavUsersListActivity
 import com.romnan.githubfinduser.feature_search_user.presentation.adapter.UserAdapter
 import com.romnan.githubfinduser.feature_user_detail.presentation.UserDetailActivity
@@ -32,7 +33,11 @@ class SearchUsersActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen()
+        EspressoIdlingResource.increment() // TODO: remove idling resouce
+        installSplashScreen().setOnExitAnimationListener {
+            it.remove()
+            EspressoIdlingResource.decrement() // TODO: remove idling resouce
+        }
         setContentView(R.layout.activity_search_users)
 
         prefViewModel.state.observe(this) {
